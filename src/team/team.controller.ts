@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { TeamsService } from './team.service';
+import { CreateTeam } from './team.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('team')
@@ -7,11 +8,13 @@ import { AuthGuard } from '@nestjs/passport';
 export class TeamsController {
   constructor(private teamsService: TeamsService) {}
 
+  //Create team
   @Post()
-  createTeam(@Body() body: { name: string; memberIds: string[] }) {
-    return this.teamsService.createTeam(body.name, body.memberIds);
+  createTeam(@Body() createTeam: CreateTeam) {
+    return this.teamsService.createTeam(createTeam);
   }
 
+  //Get team by id
   @Get(':id')
   getTeam(@Param('id') id: string) {
     return this.teamsService.getTeam(id);

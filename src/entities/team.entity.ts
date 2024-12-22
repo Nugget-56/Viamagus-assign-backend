@@ -1,5 +1,12 @@
 import { Entity, ObjectIdColumn, ObjectId, Column } from 'typeorm';
-import { TeamMember } from './member.entity';
+
+export class Member {
+  @Column()
+  id: string;
+
+  @Column('array')
+  tasks: string[];
+}
 
 @Entity()
 export class Team {
@@ -9,6 +16,6 @@ export class Team {
   @Column()
   name: string;
 
-  @Column()
-  members: string[];
+  @Column('array')
+  members: Member[];
 }

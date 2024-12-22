@@ -12,11 +12,8 @@ export class TasksService {
     private tasksRepository: Repository<Task>,
   ) {}
 
-  async createTask(createTaskDto: CreateTask): Promise<Task> {
-    const task = this.tasksRepository.create({
-      ...createTaskDto,
-      assigneeId: new ObjectId(createTaskDto.assigneeId),
-    });
+  async createTask(createTask: CreateTask): Promise<Task> {
+    const task = this.tasksRepository.create(createTask);
     return this.tasksRepository.save(task);
   }
 
@@ -26,14 +23,14 @@ export class TasksService {
 
   async getTasksByAssignee(assigneeId: string): Promise<Task[]> {
     return this.tasksRepository.find({ 
-      where: { assigneeId: new ObjectId(assigneeId) }, 
+      where: { assigneeId }, 
     });
   }
 
   async assignTask(taskId: string, assigneeId: string): Promise<Task> {
     const objectTaskId = new ObjectId(taskId);
     await this.tasksRepository.update(objectTaskId, {
-      assigneeId: new ObjectId(assigneeId),
+      assigneeId,
     });
     return this.tasksRepository.findOne({ where: { id: objectTaskId } });
   }

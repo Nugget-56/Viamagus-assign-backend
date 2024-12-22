@@ -8,7 +8,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { TeamsModule } from './team/team.module';
 import { Team } from './entities/team.entity';
 import { Task } from './entities/tasks.entity';
-import { TeamMember } from './entities/member.entity';
+//import { TeamMember } from './entities/member.entity';
 
 
 @Module({
@@ -19,7 +19,7 @@ import { TeamMember } from './entities/member.entity';
       url: process.env.DATABASE_URL,
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Task, Team, TeamMember],
+      entities: [Task, Team],
       
     }),
     AuthModule,
