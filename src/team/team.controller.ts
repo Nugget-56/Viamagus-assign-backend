@@ -1,10 +1,11 @@
 import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { TeamsService } from './team.service';
 import { CreateTeam } from './team.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('team')
-//@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class TeamsController {
   constructor(private teamsService: TeamsService) {}
 

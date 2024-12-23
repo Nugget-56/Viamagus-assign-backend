@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository, Repository } from 'typeorm';
 import { Task } from '../entities/tasks.entity';
 import { CreateTask, UpdateTask } from './tasks.dto';
 import { ObjectId } from 'mongodb';
@@ -9,7 +9,7 @@ import { ObjectId } from 'mongodb';
 export class TasksService {
   constructor(
     @InjectRepository(Task)
-    private tasksRepository: Repository<Task>,
+    private tasksRepository: MongoRepository<Task>,
   ) {}
 
   async createTask(createTask: CreateTask): Promise<Task> {
@@ -32,13 +32,13 @@ export class TasksService {
     await this.tasksRepository.update(objectTaskId, {
       assigneeId,
     });
-    return this.tasksRepository.findOne({ where: { id: objectTaskId } });
+    return this.tasksRepository.findOne({ where: { _id: objectTaskId } } );
   }
 
   async updateTask(id: string, updateTask: UpdateTask): Promise<Task> {
     const objectId = new ObjectId(id);
     await this.tasksRepository.update(objectId, updateTask);
-    return this.tasksRepository.findOne({where: { id: objectId }});
+    return this.tasksRepository.findOne({ where: {_id: objectId }});
   }
 
   async removeTask(id: string): Promise<void> {

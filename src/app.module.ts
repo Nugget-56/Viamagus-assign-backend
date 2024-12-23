@@ -8,11 +8,13 @@ import { TasksModule } from './tasks/tasks.module';
 import { TeamsModule } from './team/team.module';
 import { Team } from './entities/team.entity';
 import { Task } from './entities/tasks.entity';
-//import { TeamMember } from './entities/member.entity';
+import { PassportModule } from "@nestjs/passport";
+import { UsersModule } from './users/users.module';
 
 
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mongodb',
@@ -25,6 +27,7 @@ import { Task } from './entities/tasks.entity';
     AuthModule,
     TasksModule,
     TeamsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
